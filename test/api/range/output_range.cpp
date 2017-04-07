@@ -25,8 +25,11 @@ STF_CASE_TPL("distance", STF_NUMERIC_TYPES)
   std::vector<T> fixed_data(24);
 
   auto r  = range(data);
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS  
   auto rf = range(fixed_data, 8_c);
-
+#else
+  auto rf = range(fixed_data, uliteral<8>());
+#endif
   STF_EQUAL( std::distance(boost::begin(r), boost::end(r))  , 3);
   STF_EQUAL( std::distance(boost::begin(rf), boost::end(rf)), 3);
 }

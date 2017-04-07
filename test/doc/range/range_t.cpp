@@ -16,9 +16,11 @@ int main()
   using namespace boost::simd::literal;
 
   std::int32_t data[16] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS  
   boost::simd::range_t<std::int32_t*,8> r = boost::simd::range(&data[0], &data[0]+16, 8_c);
-
+#else
+  boost::simd::range_t<std::int32_t*,8> r = boost::simd::range(&data[0], &data[0]+16, uliteral<8>());
+#endif
   std::cout << *r.begin() << "\n";
   std::cout << *(r.begin()+1) << "\n";
 

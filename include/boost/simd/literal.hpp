@@ -9,6 +9,7 @@
 #ifndef BOOST_SIMD_LITERALS_HPP_INCLUDED
 #define BOOST_SIMD_LITERALS_HPP_INCLUDED
 
+#include <boost/config.hpp>
 #include <boost/simd/detail/nsm.hpp>
 
 namespace boost { namespace simd
@@ -41,12 +42,21 @@ namespace boost { namespace simd
 
   namespace literal
   {
+    // Alternative to xxx_c when user defined literals are not supported.
+    template <std::uint64_t V>
+    constexpr nsm::uint64_t<V> uliteral()
+    {
+      return {};
+    }
+
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
     // Enables xxx_c to be turned into usable integral constant int_<xxx>
     template <char ...c>
     constexpr nsm::uint64_t< boost::simd::detail::parse<sizeof...(c),c...>(1)> operator"" _c()
     {
       return {};
     }
+#endif
   }
 } }
 

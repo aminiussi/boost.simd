@@ -20,8 +20,11 @@ using namespace boost::simd::literal;
 int main()
 {
   std::vector<float, boost::simd::allocator<float>> x{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
   auto pic = boost::simd::aligned_range(x.begin(),x.end(), 8_c);
+#else
+  auto pic = boost::simd::aligned_range(x.begin(),x.end(), uliteral<8>());
+#endif
   for(auto&& e : pic) std::cout << e;
   std::cout << std::endl;
 

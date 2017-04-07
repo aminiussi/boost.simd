@@ -30,8 +30,11 @@ STF_CASE_TPL("distance", STF_NUMERIC_TYPES)
   std::vector<T,boost::simd::allocator<T,8>> data2(24);
 
   auto rng  = aligned_range(data);
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
   auto rng8 = aligned_range(data2, 8_c);
-
+#else
+  auto rng8 = aligned_range(data2, uliteral<8>());
+#endif
   STF_EQUAL( std::distance(boost::begin(rng) , boost::end(rng) ), 3 );
   STF_EQUAL( std::distance(boost::begin(rng8), boost::end(rng8)), 3 );
 }

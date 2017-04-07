@@ -18,8 +18,11 @@ int main()
 
   std::vector<float> data{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18};
 
+#ifndef BOOST_NO_CXX11_USER_DEFINED_LITERALS
   boost::simd::segmented_range_t<float*,4> r = boost::simd::segmented_range(&data[0], &data[0]+18,4_c);
-
+#else
+  boost::simd::segmented_range_t<float*,4> r = boost::simd::segmented_range(&data[0], &data[0]+18,uliteral<4>());
+#endif
   for(float v : r.head) std::cout << v << " ";
   std::cout << "\n";
 
